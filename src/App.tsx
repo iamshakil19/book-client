@@ -1,13 +1,13 @@
+import { Toaster } from "react-hot-toast";
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
-
   return (
-    <div className='text-red-500'>
-      This is new
-
-      <button className="btn">Button</button>
+    <div className="">
+      <Toaster />
+      <MainLayout />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

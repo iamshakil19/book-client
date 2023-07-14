@@ -11,7 +11,28 @@ export const authApi = apiSlice.injectEndpoints({
         method: "POST",
         body: userData,
       }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              accessToken: result?.data?.data?.accessToken,
+              user: result?.data?.data?.user,
+            })
+          );
+          dispatch(
+            userLoggedIn({
+              accessToken: result?.data?.data?.accessToken,
+              user: result?.data?.data?.user,
+            })
+          );
+        } catch (error) {
+          // nothing
+        }
+      },
     }),
+
     login: builder.mutation({
       query: (loginData) => ({
         url: "/auth/login",
@@ -45,4 +66,4 @@ export const authApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { useLoginMutation, useSignUpMutation } = authApi;

@@ -1,7 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import LoginImg from "../assets/login.jpg";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
+import { useSignUpMutation } from "../redux/features/auth/authApi";
+import { useEffect } from "react";
+import { toast } from "react-hot-toast";
 
 interface SignupFormInputs {
   name: string;
@@ -10,6 +17,8 @@ interface SignupFormInputs {
 }
 
 export default function Signup() {
+  const navigate = useNavigate();
+
   const {
     register,
     formState: { errors },
@@ -17,9 +26,24 @@ export default function Signup() {
     reset,
   } = useForm<SignupFormInputs>();
 
+  const [signUp, { isLoading, isError: resError, isSuccess }] =
+    useSignUpMutation();
+
   const onSubmit = (data: SignupFormInputs) => {
-    console.log(data);
+    signUp(data);
   };
+
+  useEffect(() => {
+    if (resError) {
+      toast.error(resError?.data?.message, { id: "login" });
+    }
+  }, [resError]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/");
+    }
+  }, [isSuccess, navigate]);
 
   return (
     <div className="flex min-h-screen">
@@ -62,7 +86,9 @@ export default function Signup() {
                 )}
               </div>
               <div>
-                <h3 className="poppins text-base font-medium mb-2 mt-5  ">Email</h3>
+                <h3 className="poppins text-base font-medium mb-2 mt-5  ">
+                  Email
+                </h3>
                 <input
                   placeholder="Type your email"
                   type="email"
@@ -120,7 +146,7 @@ export default function Signup() {
                 )}
               </div>
               <input
-                // disabled={isLoading}
+                disabled={isLoading}
                 className="bg-violet-600 text-white mt-5 w-full py-2 text-lg poppins font-semibold cursor-pointer uppercase"
                 type="submit"
                 value="Signup"

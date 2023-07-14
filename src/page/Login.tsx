@@ -8,15 +8,12 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { toast } from "react-hot-toast";
-import useAuth from "../hooks/useAuth";
 interface LoginFormInputs {
   email: string;
   password: string;
 }
 
 export default function Login() {
-  const isLoggedIn = useAuth();
-
   const {
     register,
     formState: { errors },
@@ -30,8 +27,6 @@ export default function Login() {
 
   useEffect(() => {
     if (resError) {
-      console.log(resError?.data?.message);
-
       toast.error(resError?.data?.message, { id: "login" });
     }
   }, [resError]);

@@ -1,8 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { useAppSelector } from "../redux/hooks";
+import { useCreateBookMutation } from "../redux/features/book/bookSlice";
+import { useNavigate } from "react-router-dom";
 
 interface AddBookFormInputs {
   image?: string;
@@ -13,6 +19,8 @@ interface AddBookFormInputs {
 }
 
 export default function AddBook() {
+  const { user } = useAppSelector((state) => state.auth);
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -20,9 +28,26 @@ export default function AddBook() {
     reset,
   } = useForm<AddBookFormInputs>();
 
+  const [createBook, { isLoading, isError: resError, isSuccess }] =
+    useCreateBookMutation();
+
   const onSubmit = (data: AddBookFormInputs) => {
-    console.log(data);
+    const finalData = { creator: user?.email, ...data };
+    createBook(finalData);
   };
+
+  useEffect(() => {
+    if (resError) {
+      toast.error(resError?.data?.message, { id: "add-new-book" });
+    }
+  }, [resError]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Book created successfully", { id: "add-new-book" });
+      navigate("/books")
+    }
+  }, [isSuccess, navigate]);
 
   return (
     <div className="container mx-auto px-5">

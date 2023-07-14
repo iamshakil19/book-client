@@ -41,6 +41,7 @@ export default function Signup() {
 
   useEffect(() => {
     if (isSuccess) {
+      toast.success("Account successfully created", { id: "login" });
       navigate("/");
     }
   }, [isSuccess, navigate]);

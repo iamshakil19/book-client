@@ -1,6 +1,18 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Link, useLocation } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { userLoggedOut } from "../redux/features/auth/authSlice";
+
 export default function Navbar() {
   const location = useLocation();
+  const isLoggedIn = useAuth();
+  const { user } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const handleLogout = () => {
+    dispatch(userLoggedOut());
+    localStorage.removeItem("auth");
+  };
 
   return (
     <div className="drawer fixed top backdrop-blur-lg bg-white/60 z-20 lg:z-30">
@@ -42,28 +54,33 @@ export default function Navbar() {
                   All Books
                 </li>
               </Link>
-              <Link to="/add-new-book">
-                <li
-                  className={`${
-                    location.pathname === "/add-new-book"
-                      ? "bg-violet-600 text-white"
-                      : "bg-slate-200"
-                  } text-sm rounded-md mx-2 py-1.5 font-medium w-28 text-center`}
-                >
-                  Add Book
-                </li>
-              </Link>
-              <Link to="/wishlist">
-                <li
-                  className={`${
-                    location.pathname === "/wishlist"
-                      ? "bg-violet-600 text-white"
-                      : "bg-slate-200"
-                  } text-sm rounded-md mx-2 py-1.5 font-medium w-28 text-center`}
-                >
-                  Wishlist
-                </li>
-              </Link>
+
+              {isLoggedIn && (
+                <>
+                  <Link to="/add-new-book">
+                    <li
+                      className={`${
+                        location.pathname === "/add-new-book"
+                          ? "bg-violet-600 text-white"
+                          : "bg-slate-200"
+                      } text-sm rounded-md mx-2 py-1.5 font-medium w-28 text-center`}
+                    >
+                      Add Book
+                    </li>
+                  </Link>
+                  <Link to="/wishlist">
+                    <li
+                      className={`${
+                        location.pathname === "/wishlist"
+                          ? "bg-violet-600 text-white"
+                          : "bg-slate-200"
+                      } text-sm rounded-md mx-2 py-1.5 font-medium w-28 text-center`}
+                    >
+                      Wishlist
+                    </li>
+                  </Link>
+                </>
+              )}
             </ul>
           </div>
 
@@ -87,17 +104,32 @@ export default function Navbar() {
               >
                 <li>
                   <Link
-                    to="/login"
-                    className="py-2 mb-2 font-medium hover:bg-violet-600 hover:text-white"
+                    to="#"
+                    className="justify-between py-2 mb-2 font-medium"
                   >
-                    Login
+                    Profile
+                    <span className="badge bg-violet-600 text-white">New</span>
                   </Link>
                 </li>
-                <li>
-                  <span className="py-2 mb-1 font-medium hover:bg-red-500 hover:text-white ">
-                    Logout
-                  </span>
-                </li>
+                {isLoggedIn ? (
+                  <li>
+                    <span
+                      onClick={handleLogout}
+                      className="py-2 mb-1 font-medium hover:bg-red-500 hover:text-white "
+                    >
+                      Logout
+                    </span>
+                  </li>
+                ) : (
+                  <li>
+                    <Link
+                      to="/login"
+                      className="py-2 mb-2 font-medium hover:bg-violet-600 hover:text-white"
+                    >
+                      Login
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
@@ -121,33 +153,48 @@ export default function Navbar() {
             </li>
           </Link>
 
-          <Link to="/add-new-book">
-            <li
-              className={`${
-                location.pathname === "/add-new-book"
-                  ? "bg-slate-500"
-                  : "bg-slate-900"
-              }  rounded-md py-1.5 px-3 mb-2`}
-            >
-              Add Book
-            </li>
-          </Link>
-          <Link to="/wishlist">
-            <li
-              className={`${
-                location.pathname === "/wishlist"
-                  ? "bg-slate-500"
-                  : "bg-slate-900"
-              }  rounded-md py-1.5 px-3 mb-2`}
-            >
-              Wishlist
-            </li>
-          </Link>
+          {isLoggedIn && (
+            <>
+              <Link to="/add-new-book">
+                <li
+                  className={`${
+                    location.pathname === "/add-new-book"
+                      ? "bg-slate-500"
+                      : "bg-slate-900"
+                  }  rounded-md py-1.5 px-3 mb-2`}
+                >
+                  Add Book
+                </li>
+              </Link>
+              <Link to="/wishlist">
+                <li
+                  className={`${
+                    location.pathname === "/wishlist"
+                      ? "bg-slate-500"
+                      : "bg-slate-900"
+                  }  rounded-md py-1.5 px-3 mb-2`}
+                >
+                  Wishlist
+                </li>
+              </Link>
+            </>
+          )}
+
           <div className="my-10"></div>
-          <Link to="/login">
-            <li className="bg-violet-600 rounded-md py-1.5 px-3 mb-2">Login</li>
-          </Link>
-          <li className="bg-red-600 rounded-md py-1.5 px-3 mb-2">Logout</li>
+          {isLoggedIn ? (
+            <li
+              onClick={handleLogout}
+              className="bg-red-600 rounded-md py-1.5 px-3 mb-2"
+            >
+              Logout
+            </li>
+          ) : (
+            <Link to="/login">
+              <li className="bg-violet-600 rounded-md py-1.5 px-3 mb-2">
+                Login
+              </li>
+            </Link>
+          )}
         </ul>
       </div>
     </div>

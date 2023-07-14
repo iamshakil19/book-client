@@ -6,40 +6,47 @@ import Signup from "../page/Signup";
 import Home from "../page/Home";
 import Books from "../page/Books";
 import AddBook from "../page/AddBook";
+import HomeBook from "../page/HomeBook";
 const routes = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
       {
-        index: true,
+        path: "/",
         element: <Home />,
+        children: [
+          {
+            path: "/",
+            element: <HomeBook />,
+          },
+          {
+            path: "/books",
+            element: <Books />,
+          },
+          {
+            path: "/add-new-book",
+            element: <AddBook />,
+          },
+          {
+            path: "/wishlist",
+            element: <AddBook />,
+          },
+        ],
       },
       {
-        path: "/books",
-        element: <Books />,
+        path: "/login",
+        element: <Login />,
       },
       {
-        path: "/add-new-book",
-        element: <AddBook />,
+        path: "/signup",
+        element: <Signup />,
       },
       {
-        path: "/wishlist",
-        element: <AddBook />,
+        path: "*",
+        element: <NotFound />,
       },
     ],
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    element: <Signup />,
-  },
-  {
-    path: "*",
-    element: <NotFound />,
   },
 ]);
 

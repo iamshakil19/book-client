@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { IUser } from "../../../types/globalTypes";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IAuth {
-  accessToken?: string;
+  accessToken?: string | undefined;
   user?: IUser;
 }
 
@@ -14,9 +16,18 @@ const initialState: IAuth = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    userLoggedIn: (state, action) => {
+      state.accessToken = action.payload.accessToken;
+      state.user = action.payload.user;
+    },
+    userLoggedOut: (state) => {
+      state.accessToken = undefined;
+      state.user = undefined;
+    },
+  },
 });
 
-export const {} = authSlice.actions
+export const { userLoggedIn, userLoggedOut } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,13 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import LoginImg from "../assets/login.jpg";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../redux/features/auth/authApi";
+import { toast } from "react-hot-toast";
+import useAuth from "../hooks/useAuth";
 interface LoginFormInputs {
   email: string;
   password: string;
 }
 
 export default function Login() {
+  const isLoggedIn = useAuth();
+
   const {
     register,
     formState: { errors },
@@ -15,8 +24,26 @@ export default function Login() {
     reset,
   } = useForm<LoginFormInputs>();
 
+  const navigate = useNavigate();
+
+  const [login, { isLoading, error: resError, isSuccess }] = useLoginMutation();
+
+  useEffect(() => {
+    if (resError) {
+      console.log(resError?.data?.message);
+
+      toast.error(resError?.data?.message, { id: "login" });
+    }
+  }, [resError]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/");
+    }
+  }, [isSuccess, navigate]);
+
   const onSubmit = (data: LoginFormInputs) => {
-    console.log(data);
+    login(data);
   };
 
   return (
@@ -101,7 +128,7 @@ export default function Login() {
                 Forgot password ?
               </Link>
               <input
-                // disabled={isLoading}
+                disabled={isLoading}
                 className="bg-violet-600 text-white mt-5 w-full py-2 text-lg poppins font-semibold cursor-pointer uppercase"
                 type="submit"
                 value="Login"

@@ -3,11 +3,11 @@ export default function Navbar() {
   const location = useLocation();
 
   return (
-    <div className="drawer fixed top backdrop-blur-lg z-10">
+    <div className="drawer fixed top backdrop-blur-lg bg-white/60 z-20 lg:z-30">
       <input id="navbar-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <div className="w-full container mx-auto navbar bg-white/50 flex justify-between items-center">
+        <div className="w-full container mx-auto navbar  flex justify-between items-center">
           <div className="flex-none lg:hidden">
             <label htmlFor="navbar-drawer" className="btn btn-square btn-ghost">
               <svg

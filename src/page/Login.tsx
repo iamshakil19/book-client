@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { toast } from "react-hot-toast";
+
 interface LoginFormInputs {
   email: string;
   password: string;

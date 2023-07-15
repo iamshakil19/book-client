@@ -12,6 +12,8 @@ export default function HomeBook() {
   const { data: allBooks, isLoading, isError } = useGetBooksQuery(queryString);
   const { data } = allBooks || {};
 
+  const newData = data?.slice(0, 10);
+
   let content = null;
 
   if (isLoading) {
@@ -28,7 +30,7 @@ export default function HomeBook() {
     content = (
       <div className="container mx-auto px-5">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {data?.map((book) => (
+          {newData?.map((book) => (
             <BookCard book={book} key={book._id} />
           ))}
         </div>

@@ -1,34 +1,50 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { SlLike } from "react-icons/sl";
 import { FcLikePlaceholder, FcLike, FcBookmark } from "react-icons/fc";
 import { CiBookmark } from "react-icons/ci";
+import { IBookResponse } from "../types/globalTypes";
+import { useNavigate } from "react-router-dom";
 
-export default function BookCard() {
+const defaultImage =
+  "https://images.unsplash.com/photo-1510172951991-856a654063f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80";
+
+export default function BookCard({ book }: { book: IBookResponse }) {
+  const navigate = useNavigate();
+
+  const { title, author, genre, creator, _id, publication, image } = book || {};
   return (
     <div className="card mx-auto card-compact               bg-base-100 shadow-xl w-64 md:w-72">
       <figure>
         <img
-          className="h-56 w-full object-cover object-bottom cursor-pointer"
-          src="https://images.unsplash.com/photo-1510172951991-856a654063f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+          onClick={() => navigate(`/books/${_id}`)}
+          className="h-56 w-full object-cover cursor-pointer"
+          src={image ? image : defaultImage}
           alt="Shoes"
         />
       </figure>
       <div className="card-body">
-        <h2 className="card-title cursor-pointer">Nineteen Eighty-Four</h2>
-        <p className="font-bold text-slate-500">Shakil Ahmed</p>
+        <h2
+          onClick={() => navigate(`/books/${_id}`)}
+          className="card-title cursor-pointer capitalize"
+        >
+          {title}
+        </h2>
+        <p className="font-bold text-slate-500 capitalize">{author}</p>
         <div className="flex justify-between items-center">
           <p className="flex items-center gap-2">
             <span>
               <AiOutlineClockCircle size={20} />
             </span>
             <span title="publication date" className="mt-1">
-              14 Jul, 2023
+              {publication}
             </span>
           </p>
 
           <div>
-            <p title="genre" className="badge badge-outline">
-              Fiction
+            <p title="genre" className="badge badge-outline capitalize">
+              {genre}
             </p>
           </div>
         </div>

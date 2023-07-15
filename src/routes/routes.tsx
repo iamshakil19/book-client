@@ -9,6 +9,7 @@ import AddBook from "../page/AddBook";
 import HomeBook from "../page/HomeBook";
 import PrivateRoute from "../utils/PrivateRoute";
 import PublicRoute from "../utils/PublicRoute";
+import BookDetails from "../page/BookDetails";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -25,6 +26,10 @@ const routes = createBrowserRouter([
           {
             path: "/books",
             element: <Books />,
+          },
+          {
+            path: "/books/:id",
+            element: <BookDetails />,
           },
           {
             path: "/add-new-book",

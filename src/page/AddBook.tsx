@@ -7,8 +7,8 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useAppSelector } from "../redux/hooks";
-import { useCreateBookMutation } from "../redux/features/book/bookSlice";
 import { useNavigate } from "react-router-dom";
+import { useCreateBookMutation } from "../redux/features/book/bookApi";
 
 interface AddBookFormInputs {
   image?: string;
@@ -16,6 +16,7 @@ interface AddBookFormInputs {
   author: string;
   genre: string;
   publication: Date;
+  summary?: string;
 }
 
 export default function AddBook() {
@@ -32,7 +33,15 @@ export default function AddBook() {
     useCreateBookMutation();
 
   const onSubmit = (data: AddBookFormInputs) => {
-    const finalData = { creator: user?.email, ...data };
+    const { publication: publicationDate, ...others } = data;
+    const newDateFormat = new Date(publicationDate);
+    const year = newDateFormat.getFullYear();
+    const finalData = {
+      creator: user?.email,
+      publication: year.toString(),
+      ...others,
+    };
+
     createBook(finalData);
   };
 
@@ -45,7 +54,7 @@ export default function AddBook() {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Book created successfully", { id: "add-new-book" });
-      navigate("/books")
+      navigate("/books");
     }
   }, [isSuccess, navigate]);
 
@@ -80,7 +89,7 @@ export default function AddBook() {
           </div>
           <div>
             <h3 className="poppins text-base font-medium mb-2 mt-2 ">Author</h3>
-            <div className="relative">
+            <div className="">
               <input
                 placeholder="Type author name"
                 type="text"
@@ -105,7 +114,7 @@ export default function AddBook() {
           </div>
           <div>
             <h3 className="poppins text-base font-medium mb-2 mt-2 ">Genre</h3>
-            <div className="relative">
+            <div className="">
               <input
                 placeholder="Type genre name"
                 type="text"
@@ -132,7 +141,7 @@ export default function AddBook() {
             <h3 className="poppins text-base font-medium mb-2 mt-2 ">
               Publication
             </h3>
-            <div className="relative">
+            <div className="">
               <input
                 placeholder="Type publication date"
                 type="date"
@@ -157,12 +166,25 @@ export default function AddBook() {
           </div>
           <div>
             <h3 className="poppins text-base font-medium mb-2 mt-2 ">Image</h3>
-            <div className="relative">
+            <div className="">
               <input
                 placeholder="Image link ( Optional )"
                 type="text"
                 className={`border w-full outline-none py-2 px-3 focus:border-slate-700 border-slate-300`}
                 {...register("image")}
+              />
+            </div>
+          </div>
+          <div>
+            <h3 className="poppins text-base font-medium mb-2 mt-2 ">
+              Summary
+            </h3>
+            <div className="">
+              <textarea
+                placeholder="Summary ( Optional )"
+                type="text"
+                className={`border w-full outline-none py-2 px-3 focus:border-slate-700 border-slate-300`}
+                {...register("summary")}
               />
             </div>
           </div>

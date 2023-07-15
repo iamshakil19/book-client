@@ -10,8 +10,6 @@ const useAuthCheck = () => {
 
   useEffect(() => {
     const localAuth = localStorage?.getItem("auth");
-console.log(localAuth);
-
     if (localAuth) {
       const auth = JSON.parse(localAuth);
       if (auth?.accessToken && auth?.user) {

@@ -3,12 +3,15 @@ import { Link, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { userLoggedOut } from "../redux/features/auth/authSlice";
+import { handleSearchTerm } from "../redux/features/book/bookSlice";
 
 export default function Navbar() {
   const location = useLocation();
   const isLoggedIn = useAuth();
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const { searchTerm } = useAppSelector((state) => state.book);
+
   const handleLogout = () => {
     dispatch(userLoggedOut());
     localStorage.removeItem("auth");
@@ -83,15 +86,7 @@ export default function Navbar() {
               )}
             </ul>
           </div>
-
           <div className="hidden lg:flex gap-2">
-            <div className="form-control">
-              <input
-                type="text"
-                placeholder="Search"
-                className="input w-48 h-10 focus:outline-none border-violet-600"
-              />
-            </div>
             <div className="dropdown dropdown-end ">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">

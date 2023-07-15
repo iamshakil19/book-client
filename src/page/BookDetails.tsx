@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetSingleBookQuery } from "../redux/features/book/bookApi";
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
@@ -21,6 +22,7 @@ const defaultSummary =
 
 export default function BookDetails() {
   const isLoggedIn = useAuth();
+  const navigate = useNavigate()
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -74,7 +76,7 @@ export default function BookDetails() {
       <div className="text-right py-5">
         {user && user.email === creator && (
           <>
-            <button className="bg-blue-100 p-1.5 hover:text-white hover:bg-blue-500 rounded-md transition-all duration-150 mx-2">
+            <button onClick={() => navigate(`/edit-book/${_id}`)} className="bg-blue-100 p-1.5 hover:text-white hover:bg-blue-500 rounded-md transition-all duration-150 mx-2">
               <MdOutlineModeEditOutline size={22} />
             </button>
             <button

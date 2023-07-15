@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import useAuth from "../hooks/useAuth";
 import DeleteBookModal from "../components/DeleteBookModal";
 import { handleDeleteBookModal } from "../redux/features/book/bookSlice";
+import Reviews from "./Reviews";
 const defaultImage =
   "https://images.unsplash.com/photo-1510172951991-856a654063f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80";
 
@@ -22,7 +23,7 @@ const defaultSummary =
 
 export default function BookDetails() {
   const isLoggedIn = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -76,7 +77,10 @@ export default function BookDetails() {
       <div className="text-right py-5">
         {user && user.email === creator && (
           <>
-            <button onClick={() => navigate(`/edit-book/${_id}`)} className="bg-blue-100 p-1.5 hover:text-white hover:bg-blue-500 rounded-md transition-all duration-150 mx-2">
+            <button
+              onClick={() => navigate(`/edit-book/${_id}`)}
+              className="bg-blue-100 p-1.5 hover:text-white hover:bg-blue-500 rounded-md transition-all duration-150 mx-2"
+            >
               <MdOutlineModeEditOutline size={22} />
             </button>
             <button
@@ -91,7 +95,10 @@ export default function BookDetails() {
         )}
       </div>
 
-      <div>{content}</div>
+      <div>
+        {content}
+        <Reviews />
+      </div>
 
       <DeleteBookModal />
     </div>

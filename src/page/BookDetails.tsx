@@ -97,7 +97,7 @@ export default function BookDetails() {
 
       <div>
         {content}
-        <Reviews />
+        <Reviews id={id} />
       </div>
 
       <DeleteBookModal />

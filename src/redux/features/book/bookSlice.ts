@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { apiSlice } from "../../api/apiSlice";
 
@@ -10,7 +11,12 @@ export const bookApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getBooks: builder.query({
+      query: (queryString) => ({
+        url: `/books?${queryString}`,
+      }),
+    }),
   }),
 });
 
-export const { useCreateBookMutation } = bookApi;
+export const { useCreateBookMutation, useGetBooksQuery } = bookApi;

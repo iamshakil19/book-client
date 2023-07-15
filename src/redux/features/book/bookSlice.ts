@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { createSlice } from "@reduxjs/toolkit";
@@ -8,6 +9,9 @@ const initialState = {
   bookDeleteId: "",
   filterByGenre: "",
   filterByPublication: "",
+  wishlist: localStorage.getItem("wishlist")
+    ? JSON.parse(localStorage.getItem("wishlist"))
+    : [],
 };
 
 const bookSlice = createSlice({
@@ -23,9 +27,28 @@ const bookSlice = createSlice({
     },
     handleGenreFilter: (state, action) => {
       state.filterByGenre = action.payload;
+      state.filterByPublication = "";
     },
     handlePublicationFilter: (state, action) => {
       state.filterByPublication = action.payload;
+    },
+    addToWishlist: (state, action) => {
+      const itemIndex = state.wishlist.findIndex(
+        (item) => item._id === action.payload._id
+      );
+
+      if (itemIndex >= 0) {
+        console.log("paoa gece");
+        const newWishlist = state.wishlist.filter(
+          (item) => item._id !== action.payload._id
+        );
+
+        state.wishlist = newWishlist;
+        localStorage.setItem("wishlist", JSON.stringify(newWishlist));
+      } else {
+        state.wishlist.push(action.payload);
+        localStorage.setItem("wishlist", JSON.stringify(state.wishlist));
+      }
     },
   },
 });
@@ -35,6 +58,7 @@ export const {
   handleDeleteBookModal,
   handleGenreFilter,
   handlePublicationFilter,
+  addToWishlist,
 } = bookSlice.actions;
 
 export default bookSlice.reducer;

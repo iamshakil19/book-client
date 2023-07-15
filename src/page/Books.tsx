@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { useNavigate } from "react-router-dom";
 import BookCard from "../components/BookCard";
 import { useGetBooksQuery } from "../redux/features/book/bookApi";
 import {
@@ -12,11 +15,14 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import Error from "../shared/Error";
 import Loading from "../shared/Loading";
 import { useEffect } from "react";
+import { FcDatabase } from "react-icons/fc";
 
 export default function Books() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
   const { searchTerm, filterByGenre, filterByPublication } = useAppSelector(
@@ -34,6 +40,11 @@ export default function Books() {
 
   const { data: allBooks, isLoading, isError } = useGetBooksQuery(queryString);
   const { data } = allBooks || {};
+
+  const years = [...new Set(data?.map(item => item.publication))]
+
+  // const years = data?.map((item) => item.publication);
+  console.log(years);
 
   let content = null;
 
@@ -64,7 +75,13 @@ export default function Books() {
         <div className="drawer-content">
           {/* Page content here */}
           <div>
-            <div className="text-right px-5">
+            <div className=" px-5 flex items-center justify-between">
+              <button
+                className="bg-slate-300 px-3 py-1 rounded-md"
+                onClick={() => navigate("/add-new-book")}
+              >
+                Add Book
+              </button>
               <input
                 onChange={(e) => dispatch(handleSearchTerm(e.target.value))}
                 value={searchTerm}
@@ -128,53 +145,18 @@ export default function Books() {
                   dispatch(handlePublicationFilter(e.target.value))
                 }
                 className="w-full mt-2 h-7 text-base border "
-                defaultValue={filterByPublication}
+                // defaultValue={filterByPublication}
               >
-                <option className="" value={""}>
+                <option className="" selected={filterByPublication == ""} value={""}>
                   Default
                 </option>
-                <option className="" value={"2010"}>
-                  2010
-                </option>
-                <option className="" value={"2011"}>
-                  2011
-                </option>
-                <option className="" value={"2012"}>
-                  2012
-                </option>
-                <option className="" value={"2013"}>
-                  2013
-                </option>
-                <option className="" value={"2014"}>
-                  2014
-                </option>
-                <option className="" value={"2015"}>
-                  2015
-                </option>
-                <option className="" value={"2016"}>
-                  2016
-                </option>
-                <option className="" value={"2017"}>
-                  2017
-                </option>
-                <option className="" value={"2018"}>
-                  2018
-                </option>
-                <option className="" value={"2019"}>
-                  2019
-                </option>
-                <option className="" value={"2020"}>
-                  2020
-                </option>
-                <option className="" value={"2021"}>
-                  2021
-                </option>
-                <option className="" value={"2022"}>
-                  2022
-                </option>
-                <option className="" value={"2023"}>
-                  2023
-                </option>
+                {years?.length > 0 &&
+                  years?.map((year) => (
+                    <option selected={filterByPublication == year} className="" value={year}>
+                      {" "}
+                      {year}{" "}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>

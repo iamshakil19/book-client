@@ -9,8 +9,10 @@ import {
   MdOutlineDeleteOutline,
   MdOutlineModeEditOutline,
 } from "react-icons/md";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import useAuth from "../hooks/useAuth";
+import DeleteBookModal from "../components/DeleteBookModal";
+import { handleDeleteBookModal } from "../redux/features/book/bookSlice";
 const defaultImage =
   "https://images.unsplash.com/photo-1510172951991-856a654063f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80";
 
@@ -20,7 +22,7 @@ const defaultSummary =
 export default function BookDetails() {
   const isLoggedIn = useAuth();
   const { user } = useAppSelector((state) => state.auth);
-
+  const dispatch = useAppDispatch();
   const { id } = useParams();
   const { data: book, isLoading, isError } = useGetSingleBookQuery(id);
   const { _id, title, author, genre, publication, creator, image, summary } =
@@ -75,7 +77,12 @@ export default function BookDetails() {
             <button className="bg-blue-100 p-1.5 hover:text-white hover:bg-blue-500 rounded-md transition-all duration-150 mx-2">
               <MdOutlineModeEditOutline size={22} />
             </button>
-            <button className="bg-red-100 p-1.5 hover:text-white hover:bg-red-500 rounded-md transition-all duration-150 mx-2">
+            <button
+              onClick={() =>
+                dispatch(handleDeleteBookModal({ isOpen: true, _id: _id }))
+              }
+              className="bg-red-100 p-1.5 hover:text-white hover:bg-red-500 rounded-md transition-all duration-150 mx-2"
+            >
               <MdOutlineDeleteOutline size={22} />
             </button>{" "}
           </>
@@ -83,6 +90,8 @@ export default function BookDetails() {
       </div>
 
       <div>{content}</div>
+
+      <DeleteBookModal />
     </div>
   );
 }

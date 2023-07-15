@@ -50,7 +50,7 @@ export default function EditBook() {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Book Updated", { id: "edit-book" });
-      navigate("/books");
+      navigate(`/books/${id}`);
     }
   }, [isSuccess, navigate]);
 

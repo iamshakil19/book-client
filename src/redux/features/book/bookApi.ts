@@ -40,6 +40,14 @@ export const bookApi = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["reviews"],
+    }),
+
+    getReviews: builder.query({
+      query: (id) => ({
+        url: `/books/reviews/${id}`,
+      }),
+      providesTags: ["reviews"],
     }),
   }),
 });
@@ -51,4 +59,5 @@ export const {
   useDeleteBookMutation,
   useUpdateBookMutation,
   useCreateReviewMutation,
+  useGetReviewsQuery
 } = bookApi;

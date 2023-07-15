@@ -1,9 +1,10 @@
 import React from "react";
 
-export default function ReviewCard() {
+export default function ReviewCard({ review }) {
+  const { name, review: reviewText } = review || {};
   return (
     <div>
-      <p className="border border-gray-100 my-2"></p>
+      <p className="border border-gray-100 my-3"></p>
       <div className="flex items-center gap-5">
         <div>
           <div className="avatar">
@@ -13,13 +14,8 @@ export default function ReviewCard() {
           </div>
         </div>
         <div>
-          <h2 className="font-medium mb-1.5">Shakil Ahmed</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam,
-            repellat? Nobis reprehenderit veritatis, error illo repudiandae
-            inventore, quisquam eveniet blanditiis nam perferendis facere
-            necessitatibus. Consequuntur dolore sit in laboriosam sunt.
-          </p>
+          <h2 className="font-medium mb-1.5">{name}</h2>
+          <p>{reviewText}</p>
         </div>
       </div>
     </div>

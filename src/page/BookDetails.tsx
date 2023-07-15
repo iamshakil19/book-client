@@ -41,33 +41,41 @@ export default function BookDetails() {
   }
   if (!isLoading && !isError && _id) {
     content = (
-      <div className="flex justify-center gap-10">
-        <div className="w-1/2 flex justify-end">
-          <img className="max-w-sm" src={image ? image : defaultImage} alt="" />
-        </div>
-        <div className="w-1/2">
-          <h2 className="text-2xl max-w-md text-slate-700 font-medium mt-5">
-            {title}
-          </h2>
-          <p className="mt-2">
-            by <span className="text-violet-600 cursor-pointer">{author}</span>
-          </p>
-          <p className="mt-5">
-            <span className="">Genre:</span>{" "}
-            <span className="text-violet-600 capitalize cursor-pointer">
-              {genre}
-            </span>
-          </p>
-          <p className="mt-1">
-            <span className="">Publication Year:</span>{" "}
-            <span className="font-medium">{publication}</span>
-          </p>
+      <div>
+        <div className="flex justify-center gap-10">
+          <div className="w-1/2 flex justify-end">
+            <img
+              className="max-w-sm"
+              src={image ? image : defaultImage}
+              alt=""
+            />
+          </div>
+          <div className="w-1/2">
+            <h2 className="text-2xl max-w-md text-slate-700 font-medium mt-5">
+              {title}
+            </h2>
+            <p className="mt-2">
+              by{" "}
+              <span className="text-violet-600 cursor-pointer">{author}</span>
+            </p>
+            <p className="mt-5">
+              <span className="">Genre:</span>{" "}
+              <span className="text-violet-600 capitalize cursor-pointer">
+                {genre}
+              </span>
+            </p>
+            <p className="mt-1">
+              <span className="">Publication Year:</span>{" "}
+              <span className="font-medium">{publication}</span>
+            </p>
 
-          <p className="mt-5">
-            <span className="font-medium">Summary: </span>{" "}
-            {summary ? summary : defaultSummary}
-          </p>
+            <p className="mt-5">
+              <span className="font-medium">Summary: </span>{" "}
+              {summary ? summary : defaultSummary}
+            </p>
+          </div>
         </div>
+        <Reviews id={id} />
       </div>
     );
   }
@@ -95,10 +103,7 @@ export default function BookDetails() {
         )}
       </div>
 
-      <div>
-        {content}
-        <Reviews id={id} />
-      </div>
+      <div>{content}</div>
 
       <DeleteBookModal />
     </div>

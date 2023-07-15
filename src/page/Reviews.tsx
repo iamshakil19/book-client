@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { FormEvent, useState, useEffect, useRef } from "react";
 import { IoSendSharp } from "react-icons/io5";
 import ReviewCard from "../components/ReviewCard";
-import { useCreateReviewMutation } from "../redux/features/book/bookApi";
+import {
+  useCreateReviewMutation,
+  useGetReviewsQuery,
+} from "../redux/features/book/bookApi";
 import { useAppSelector } from "../redux/hooks";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-hot-toast";
@@ -11,6 +15,8 @@ export default function Reviews({ id }) {
   const isLoggedIn = useAuth();
   const { user } = useAppSelector((state) => state.auth);
   const [reviewValue, setReviewValue] = useState<string>("");
+  const { data: reviewsData, isLoading, isError } = useGetReviewsQuery(id);
+  const { reviews } = reviewsData?.data || {};
 
   const [createReview, { isSuccess }] = useCreateReviewMutation();
   const formRef = useRef(null);
@@ -31,7 +37,6 @@ export default function Reviews({ id }) {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Reviews added successfully", { id: "reviews" });
-      setReviewValue("");
       formRef.current.reset();
     }
   }, [isSuccess]);
@@ -59,9 +64,9 @@ export default function Reviews({ id }) {
 
       <div className="mx-auto max-w-3xl mt-10">
         <h2 className="font-semibold text-xl font-">Reviews</h2>
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
+        {reviews?.map((review, index) => (
+          <ReviewCard review={review} key={index} />
+        ))}
       </div>
     </div>
   );

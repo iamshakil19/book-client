@@ -58,30 +58,32 @@ export default function Navbar() {
                 </li>
               </Link>
 
-              <Link to="/wishlist">
-                <li
-                  className={`${
-                    location.pathname === "/wishlist"
-                      ? "bg-violet-600 text-white"
-                      : "bg-slate-200"
-                  } text-sm rounded-md mx-2 py-1.5 font-medium w-28 text-center`}
-                >
-                  Wishlist
-                </li>
-              </Link>
-
               {isLoggedIn && (
-                <Link to="/add-new-book">
-                  <li
-                    className={`${
-                      location.pathname === "/add-new-book"
-                        ? "bg-violet-600 text-white"
-                        : "bg-slate-200"
-                    } text-sm rounded-md mx-2 py-1.5 font-medium w-28 text-center`}
-                  >
-                    Add Book
-                  </li>
-                </Link>
+                <>
+                  <Link to="/wishlist">
+                    <li
+                      className={`${
+                        location.pathname === "/wishlist"
+                          ? "bg-violet-600 text-white"
+                          : "bg-slate-200"
+                      } text-sm rounded-md mx-2 py-1.5 font-medium w-28 text-center`}
+                    >
+                      Wishlist
+                    </li>
+                  </Link>
+
+                  <Link to="/add-new-book">
+                    <li
+                      className={`${
+                        location.pathname === "/add-new-book"
+                          ? "bg-violet-600 text-white"
+                          : "bg-slate-200"
+                      } text-sm rounded-md mx-2 py-1.5 font-medium w-28 text-center`}
+                    >
+                      Add Book
+                    </li>
+                  </Link>
+                </>
               )}
             </ul>
           </div>
@@ -97,23 +99,26 @@ export default function Navbar() {
                 tabIndex={0}
                 className="mt-3 z-[1] p-2 shadow-md border menu menu-sm dropdown-content bg-slate-100 rounded-box w-52"
               >
-                <li>
-                  <Link
-                    to="/currently-reading"
-                    className="justify-between py-2 mb-2 font-medium"
-                  >
-                    Currently Reading
-                  </Link>
-                </li>
                 {isLoggedIn ? (
-                  <li>
-                    <span
-                      onClick={handleLogout}
-                      className="py-2 mb-1 font-medium hover:bg-red-500 hover:text-white "
-                    >
-                      Logout
-                    </span>
-                  </li>
+                  <>
+                    <li>
+                      <Link
+                        to="/currently-reading"
+                        className="justify-between py-2 mb-2 font-medium"
+                      >
+                        Currently Reading
+                      </Link>
+                    </li>
+
+                    <li>
+                      <span
+                        onClick={handleLogout}
+                        className="py-2 mb-1 font-medium hover:bg-red-500 hover:text-white "
+                      >
+                        Logout
+                      </span>
+                    </li>
+                  </>
                 ) : (
                   <li>
                     <Link
@@ -147,41 +152,43 @@ export default function Navbar() {
             </li>
           </Link>
 
-          <Link to="/wishlist">
-            <li
-              className={`${
-                location.pathname === "/wishlist"
-                  ? "bg-slate-500"
-                  : "bg-slate-900"
-              }  rounded-md py-1.5 px-3 mb-2`}
-            >
-              Wishlist
-            </li>
-          </Link>
-          <Link to="/currently-reading">
-            <li
-              className={`${
-                location.pathname === "/currently-reading"
-                  ? "bg-slate-500"
-                  : "bg-slate-900"
-              }  rounded-md py-1.5 px-3 mb-2`}
-            >
-              Currently Reading
-            </li>
-          </Link>
-
           {isLoggedIn && (
-            <Link to="/add-new-book">
-              <li
-                className={`${
-                  location.pathname === "/add-new-book"
-                    ? "bg-slate-500"
-                    : "bg-slate-900"
-                }  rounded-md py-1.5 px-3 mb-2`}
-              >
-                Add Book
-              </li>
-            </Link>
+            <>
+              <Link to="/wishlist">
+                <li
+                  className={`${
+                    location.pathname === "/wishlist"
+                      ? "bg-slate-500"
+                      : "bg-slate-900"
+                  }  rounded-md py-1.5 px-3 mb-2`}
+                >
+                  Wishlist
+                </li>
+              </Link>
+              <Link to="/currently-reading">
+                <li
+                  className={`${
+                    location.pathname === "/currently-reading"
+                      ? "bg-slate-500"
+                      : "bg-slate-900"
+                  }  rounded-md py-1.5 px-3 mb-2`}
+                >
+                  Currently Reading
+                </li>
+              </Link>
+
+              <Link to="/add-new-book">
+                <li
+                  className={`${
+                    location.pathname === "/add-new-book"
+                      ? "bg-slate-500"
+                      : "bg-slate-900"
+                  }  rounded-md py-1.5 px-3 mb-2`}
+                >
+                  Add Book
+                </li>
+              </Link>
+            </>
           )}
 
           <div className="my-10"></div>

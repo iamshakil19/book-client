@@ -46,8 +46,8 @@ export default function BookDetails() {
   if (!isLoading && !isError && _id) {
     content = (
       <div>
-        <div className="flex justify-center gap-10">
-          <div className="w-1/2 flex justify-end">
+        <div className="flex justify-center lg:gap-10">
+          <div className="w-1/2 hidden lg:flex justify-end">
             <img
               className="max-w-sm"
               src={image ? image : defaultImage}

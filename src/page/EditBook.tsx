@@ -124,7 +124,9 @@ export default function EditBook() {
                 Genre
               </h3>
               <div className="">
-                <select
+                <input
+                  placeholder="Type genre name"
+                  type="text"
                   defaultValue={initialGenre}
                   placeholder="Select genre name"
                   className={`border w-full outline-none py-2 px-3 ${
@@ -138,29 +140,7 @@ export default function EditBook() {
                       message: "Genre is required",
                     },
                   })}
-                >
-                  <option className="" disabled value={""}>
-                    Select Genre
-                  </option>
-                  <option className="" value={"fiction"}>
-                    Fiction
-                  </option>
-                  <option className="" value={"fantasy"}>
-                    Fantasy
-                  </option>
-                  <option className="" value={"science"}>
-                    Science
-                  </option>
-                  <option className="" value={"action"}>
-                    Action
-                  </option>
-                  <option className="" value={"mystery"}>
-                    Mystery
-                  </option>
-                  <option className="" value={"horror"}>
-                    Horror
-                  </option>
-                </select>
+                />
               </div>
               {errors.genre && (
                 <span className="label-text-alt text-red-500 text-sm">
@@ -173,7 +153,9 @@ export default function EditBook() {
                 Publication Year
               </h3>
               <div className="">
-                <select
+                <input
+                  placeholder="Type author name"
+                  type="input"
                   defaultValue={initialPublication}
                   placeholder="Select publication year"
                   className={`border w-full outline-none py-2 px-3 ${
@@ -187,53 +169,7 @@ export default function EditBook() {
                       message: "Publication is required",
                     },
                   })}
-                >
-                  <option className="" disabled value={""}>
-                    Select Year
-                  </option>
-                  <option className="" value={"2010"}>
-                    2010
-                  </option>
-                  <option className="" value={"2011"}>
-                    2011
-                  </option>
-                  <option className="" value={"2012"}>
-                    2012
-                  </option>
-                  <option className="" value={"2013"}>
-                    2013
-                  </option>
-                  <option className="" value={"2014"}>
-                    2014
-                  </option>
-                  <option className="" value={"2015"}>
-                    2015
-                  </option>
-                  <option className="" value={"2016"}>
-                    2016
-                  </option>
-                  <option className="" value={"2017"}>
-                    2017
-                  </option>
-                  <option className="" value={"2018"}>
-                    2018
-                  </option>
-                  <option className="" value={"2019"}>
-                    2019
-                  </option>
-                  <option className="" value={"2020"}>
-                    2020
-                  </option>
-                  <option className="" value={"2021"}>
-                    2021
-                  </option>
-                  <option className="" value={"2022"}>
-                    2022
-                  </option>
-                  <option className="" value={"2023"}>
-                    2023
-                  </option>
-                </select>
+                />
               </div>
               {errors.publication && (
                 <span className="label-text-alt text-red-500 text-sm">

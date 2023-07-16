@@ -10,7 +10,6 @@ export default function Navbar() {
   const isLoggedIn = useAuth();
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const { searchTerm } = useAppSelector((state) => state.book);
 
   const handleLogout = () => {
     dispatch(userLoggedOut());
@@ -40,7 +39,7 @@ export default function Navbar() {
               </svg>
             </label>
           </div>
-          <div className="flex-1 lg:flex-none px-2 mx-2">
+          <div className="flex-1 lg:flex-none text-lg font-medium px-2 mx-2">
             <Link to="/">Book Catalog</Link>
           </div>
           <div className="flex-none hidden lg:block">
@@ -141,7 +140,7 @@ export default function Navbar() {
         <ul className="menu p-4 w-64 h-full bg-black text-white">
           {/* Sidebar content here */}
 
-          <p className="text-center text-lg mb-5">Book Catalog</p>
+          <p className="text-center text-lg lg:text-xl mb-5">Book Catalog</p>
           <Link to="/books">
             <li
               className={`${

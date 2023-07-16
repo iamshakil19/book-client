@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { useEffect } from "react";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { SlLike } from "react-icons/sl";
 import { FcBookmark } from "react-icons/fc";
@@ -13,6 +14,12 @@ import {
   handleStatus,
 } from "../redux/features/book/bookSlice";
 import { BsBook, BsBookHalf, BsBookFill } from "react-icons/bs";
+import {
+  useGetWishlistQuery,
+  useHandleWishlistMutation,
+} from "../redux/features/wishlist/wishlistApi";
+import { toast } from "react-hot-toast";
+import useAuth from "../hooks/useAuth";
 const defaultImage =
   "https://images.unsplash.com/photo-1510172951991-856a654063f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80";
 
@@ -20,12 +27,40 @@ export default function BookCard({ book }: { book: IBookResponse }) {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
+  const isLoggedIn = useAuth();
+
+  const [handleWishlist, { isSuccess }] = useHandleWishlistMutation();
 
   const { title, author, genre, creator, _id, publication, image } = book || {};
 
+  const { user } = useAppSelector((state) => state.auth);
+
+  const {
+    data: wishlists,
+    isLoading,
+    isError,
+  } = useGetWishlistQuery(user.email);
+
+  const wishlistIncluded: boolean = wishlists?.data?.some(
+    (item) => item?.book?._id == _id
+  );
+
   const { wishlist, reading } = useAppSelector((state) => state.book);
-  const wishlistIncluded: boolean = wishlist.some((item) => item._id == _id);
   const readingIncluded: boolean = reading.some((item) => item._id == _id);
+
+  const handleWishlistFunc = () => {
+    if (!isLoggedIn) {
+      toast.error("You must be logged in", { id: "book-card" });
+    } else {
+      void handleWishlist({ userEmail: user?.email, book: _id });
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Book added to wishlist", { id: "book-card" });
+    }
+  }, [isSuccess]);
 
   return (
     <div className="card mx-auto card-compact               bg-base-100 shadow-xl w-64 md:w-72">
@@ -103,7 +138,7 @@ export default function BookCard({ book }: { book: IBookResponse }) {
           )}
           <div>
             <button
-              onClick={() => dispatch(addToWishlist(book))}
+              onClick={handleWishlistFunc}
               title="Wishlist"
               className="text-red-600"
             >

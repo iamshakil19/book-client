@@ -29,8 +29,11 @@ export default function Books() {
     (state) => state.book
   );
 
-  let queryString = `searchTerm=${searchTerm}`;
+  let queryString = "";
 
+  if (searchTerm) {
+    queryString += `&searchTerm=${searchTerm}`;
+  }
   if (filterByGenre) {
     queryString += `&genre=${filterByGenre}`;
   }

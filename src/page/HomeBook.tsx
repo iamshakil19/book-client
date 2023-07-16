@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { Link } from "react-router-dom";
 import BookCard from "../components/BookCard";
 import { useGetBooksQuery } from "../redux/features/book/bookApi";
 import Error from "../shared/Error";
@@ -33,6 +34,11 @@ export default function HomeBook() {
           {newData?.map((book) => (
             <BookCard book={book} key={book._id} />
           ))}
+        </div>
+        <div className="my-10 text-center">
+          <Link to="/books" className="bg-violet-600 text-white py-1.5 px-3 rounded-md">
+            All Books
+          </Link>
         </div>
       </div>
     );

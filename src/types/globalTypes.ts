@@ -4,6 +4,7 @@ export interface IUser {
 }
 
 export interface IBookResponse {
+  status?: string;
   title: string;
   author: string;
   genre: string;

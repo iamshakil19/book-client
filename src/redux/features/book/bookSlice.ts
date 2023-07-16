@@ -12,6 +12,9 @@ const initialState = {
   wishlist: localStorage.getItem("wishlist")
     ? JSON.parse(localStorage.getItem("wishlist"))
     : [],
+  reading: localStorage.getItem("reading")
+    ? JSON.parse(localStorage.getItem("reading"))
+    : [],
 };
 
 const bookSlice = createSlice({
@@ -38,7 +41,6 @@ const bookSlice = createSlice({
       );
 
       if (itemIndex >= 0) {
-        console.log("paoa gece");
         const newWishlist = state.wishlist.filter(
           (item) => item._id !== action.payload._id
         );
@@ -50,6 +52,34 @@ const bookSlice = createSlice({
         localStorage.setItem("wishlist", JSON.stringify(state.wishlist));
       }
     },
+    addToReading: (state, action) => {
+      const itemIndex = state.reading.findIndex(
+        (item) => item._id === action.payload._id
+      );
+
+      if (itemIndex >= 0) {
+        const newReading = state.reading.filter(
+          (item) => item._id !== action.payload._id
+        );
+        state.reading = newReading;
+        localStorage.setItem("reading", JSON.stringify(newReading));
+      } else {
+        const tempReading = {
+          ...action.payload,
+          status: "running",
+        };
+        state.reading.push(tempReading);
+        localStorage.setItem("reading", JSON.stringify(state.reading));
+      }
+    },
+    handleStatus: (state, action) => {
+      const itemIndex = state.reading.findIndex(
+        (item) => item._id === action.payload._id
+      );
+      state.reading[itemIndex].status = action.payload.status;
+
+      localStorage.setItem("reading", JSON.stringify(state.reading));
+    },
   },
 });
 
@@ -59,6 +89,8 @@ export const {
   handleGenreFilter,
   handlePublicationFilter,
   addToWishlist,
+  addToReading,
+  handleStatus,
 } = bookSlice.actions;
 
 export default bookSlice.reducer;

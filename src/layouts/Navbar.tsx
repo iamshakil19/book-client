@@ -58,31 +58,30 @@ export default function Navbar() {
                 </li>
               </Link>
 
+              <Link to="/wishlist">
+                <li
+                  className={`${
+                    location.pathname === "/wishlist"
+                      ? "bg-violet-600 text-white"
+                      : "bg-slate-200"
+                  } text-sm rounded-md mx-2 py-1.5 font-medium w-28 text-center`}
+                >
+                  Wishlist
+                </li>
+              </Link>
+
               {isLoggedIn && (
-                <>
-                  <Link to="/add-new-book">
-                    <li
-                      className={`${
-                        location.pathname === "/add-new-book"
-                          ? "bg-violet-600 text-white"
-                          : "bg-slate-200"
-                      } text-sm rounded-md mx-2 py-1.5 font-medium w-28 text-center`}
-                    >
-                      Add Book
-                    </li>
-                  </Link>
-                  <Link to="/wishlist">
-                    <li
-                      className={`${
-                        location.pathname === "/wishlist"
-                          ? "bg-violet-600 text-white"
-                          : "bg-slate-200"
-                      } text-sm rounded-md mx-2 py-1.5 font-medium w-28 text-center`}
-                    >
-                      Wishlist
-                    </li>
-                  </Link>
-                </>
+                <Link to="/add-new-book">
+                  <li
+                    className={`${
+                      location.pathname === "/add-new-book"
+                        ? "bg-violet-600 text-white"
+                        : "bg-slate-200"
+                    } text-sm rounded-md mx-2 py-1.5 font-medium w-28 text-center`}
+                  >
+                    Add Book
+                  </li>
+                </Link>
               )}
             </ul>
           </div>
@@ -99,11 +98,10 @@ export default function Navbar() {
               >
                 <li>
                   <Link
-                    to="#"
+                    to="/currently-reading"
                     className="justify-between py-2 mb-2 font-medium"
                   >
-                    Profile
-                    <span className="badge bg-violet-600 text-white">New</span>
+                    Currently Reading
                   </Link>
                 </li>
                 {isLoggedIn ? (
@@ -148,31 +146,41 @@ export default function Navbar() {
             </li>
           </Link>
 
+          <Link to="/wishlist">
+            <li
+              className={`${
+                location.pathname === "/wishlist"
+                  ? "bg-slate-500"
+                  : "bg-slate-900"
+              }  rounded-md py-1.5 px-3 mb-2`}
+            >
+              Wishlist
+            </li>
+          </Link>
+          <Link to="/currently-reading">
+            <li
+              className={`${
+                location.pathname === "/currently-reading"
+                  ? "bg-slate-500"
+                  : "bg-slate-900"
+              }  rounded-md py-1.5 px-3 mb-2`}
+            >
+              Currently Reading
+            </li>
+          </Link>
+
           {isLoggedIn && (
-            <>
-              <Link to="/add-new-book">
-                <li
-                  className={`${
-                    location.pathname === "/add-new-book"
-                      ? "bg-slate-500"
-                      : "bg-slate-900"
-                  }  rounded-md py-1.5 px-3 mb-2`}
-                >
-                  Add Book
-                </li>
-              </Link>
-              <Link to="/wishlist">
-                <li
-                  className={`${
-                    location.pathname === "/wishlist"
-                      ? "bg-slate-500"
-                      : "bg-slate-900"
-                  }  rounded-md py-1.5 px-3 mb-2`}
-                >
-                  Wishlist
-                </li>
-              </Link>
-            </>
+            <Link to="/add-new-book">
+              <li
+                className={`${
+                  location.pathname === "/add-new-book"
+                    ? "bg-slate-500"
+                    : "bg-slate-900"
+                }  rounded-md py-1.5 px-3 mb-2`}
+              >
+                Add Book
+              </li>
+            </Link>
           )}
 
           <div className="my-10"></div>

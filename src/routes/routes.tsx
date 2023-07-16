@@ -12,6 +12,7 @@ import PublicRoute from "../utils/PublicRoute";
 import BookDetails from "../page/BookDetails";
 import EditBook from "../page/EditBook";
 import WishList from "../page/WishList";
+import CurrentlyReading from "../page/CurrentlyReading";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -48,6 +49,10 @@ const routes = createBrowserRouter([
           {
             path: "/wishlist",
             element: <WishList />,
+          },
+          {
+            path: "/currently-reading",
+            element: <CurrentlyReading />,
           },
         ],
       },

@@ -47,7 +47,7 @@ export default function AddBook() {
   };
 
   useEffect(() => {
-    if (resError) {
+    if (resError && resError?.data) {
       toast.error(resError?.data?.message, { id: "add-new-book" });
     }
   }, [resError]);

@@ -32,8 +32,9 @@ export default function BookCard({
   readingId,
 }: {
   book: IBookResponse;
+  status: string;
+  readingId: string;
 }) {
-
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
@@ -55,10 +56,10 @@ export default function BookCard({
   const { data: readings } = useGetReadingListQuery(user && user.email);
 
   const wishlistIncluded: boolean = wishlists?.data?.some(
-    (item) => item?.book?._id == _id
+    (item: { book: { _id: string } }) => item?.book?._id == _id
   );
   const readingIncluded: boolean = readings?.data?.some(
-    (item) => item?.book?._id == _id
+    (item: { book: { _id: string } }) => item?.book?._id == _id
   );
 
   const handleWishlistFunc = () => {

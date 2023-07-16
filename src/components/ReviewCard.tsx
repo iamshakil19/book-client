@@ -1,6 +1,6 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-export default function ReviewCard({ review }) {
+export default function ReviewCard({ review }: { review: any }) {
   const { name, review: reviewText } = review || {};
   return (
     <div>

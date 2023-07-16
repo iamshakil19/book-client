@@ -16,6 +16,7 @@ import Error from "../shared/Error";
 import Loading from "../shared/Loading";
 import { useEffect } from "react";
 import { FcDatabase } from "react-icons/fc";
+import { IBookResponse } from "../types/globalTypes";
 
 export default function Books() {
   useEffect(() => {
@@ -44,8 +45,8 @@ export default function Books() {
   const { data: allBooks, isLoading, isError } = useGetBooksQuery(queryString);
   const { data } = allBooks || {};
 
-  const genres = [...new Set(data?.map((item) => item.genre))];
-  const years = [...new Set(data?.map((item) => item.publication))];
+  const genres = [...new Set(data?.map((item: { genre: any; }) => item.genre))];
+  const years = [...new Set(data?.map((item: { publication: any; }) => item.publication))];
 
   let content = null;
 
@@ -62,8 +63,8 @@ export default function Books() {
   } else if (!isLoading && !isError && data?.length > 0) {
     content = (
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7 px-5 mt-5">
-        {data?.map((book) => (
-          <BookCard book={book} key={book._id} />
+        {data?.map((book: IBookResponse) => (
+          <BookCard book={book} key={book._id} status={""} readingId={""} />
         ))}
       </div>
     );

@@ -85,14 +85,19 @@ export default function BookCard({ book }: { book: IBookResponse }) {
                 onChange={(e) =>
                   dispatch(handleStatus({ _id, status: e.target.value }))
                 }
-                name=""
-                id=""
                 className={`border ${
                   book.status === "completed" ? "bg-green-200" : "bg-slate-200"
                 } rounded-full p-0.5 focus:outline-none cursor-pointer`}
               >
-                <option value="running">Running</option>
-                <option value="completed">Completed</option>
+                <option selected={book.status === "running"} value="running">
+                  Running
+                </option>
+                <option
+                  selected={book.status === "completed"}
+                  value="completed"
+                >
+                  Completed
+                </option>
               </select>
             </div>
           )}

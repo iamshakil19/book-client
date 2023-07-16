@@ -41,10 +41,8 @@ export default function Books() {
   const { data: allBooks, isLoading, isError } = useGetBooksQuery(queryString);
   const { data } = allBooks || {};
 
-  const years = [...new Set(data?.map(item => item.publication))]
-
-  // const years = data?.map((item) => item.publication);
-  console.log(years);
+  const genres = [...new Set(data?.map((item) => item.genre))];
+  const years = [...new Set(data?.map((item) => item.publication))];
 
   let content = null;
 
@@ -111,29 +109,20 @@ export default function Books() {
               <select
                 onChange={(e) => dispatch(handleGenreFilter(e.target.value))}
                 className="w-full mt-2 h-7 text-base border "
-                defaultValue={filterByGenre}
               >
-                <option className="" value={""}>
+                <option className="" selected={filterByGenre == ""} value={""}>
                   Default
                 </option>
-                <option className="" value={"fiction"}>
-                  Fiction
-                </option>
-                <option className="" value={"fantasy"}>
-                  Fantasy
-                </option>
-                <option className="" value={"science"}>
-                  Science
-                </option>
-                <option className="" value={"action"}>
-                  Action
-                </option>
-                <option className="" value={"mystery"}>
-                  Mystery
-                </option>
-                <option className="" value={"horror"}>
-                  Horror
-                </option>
+                {genres?.length > 0 &&
+                  genres?.map((genre) => (
+                    <option
+                      className="capitalize"
+                      selected={filterByGenre == genre}
+                      value={genre}
+                    >
+                      {genre}
+                    </option>
+                  ))}
               </select>
             </div>
             <div>
@@ -145,14 +134,21 @@ export default function Books() {
                   dispatch(handlePublicationFilter(e.target.value))
                 }
                 className="w-full mt-2 h-7 text-base border "
-                // defaultValue={filterByPublication}
               >
-                <option className="" selected={filterByPublication == ""} value={""}>
+                <option
+                  className=""
+                  selected={filterByPublication == ""}
+                  value={""}
+                >
                   Default
                 </option>
                 {years?.length > 0 &&
                   years?.map((year) => (
-                    <option selected={filterByPublication == year} className="" value={year}>
+                    <option
+                      selected={filterByPublication == year}
+                      className=""
+                      value={year}
+                    >
                       {" "}
                       {year}{" "}
                     </option>

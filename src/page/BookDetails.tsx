@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetSingleBookQuery } from "../redux/features/book/bookApi";
 import Loading from "../shared/Loading";
@@ -22,6 +22,10 @@ const defaultSummary =
   "Interest predates coined money, which dates back to the eighth century BC. Some historians suggest that interest originated with loans for seeds and animals. The seeds produced a yield and could be returned with interest at harvest time. Some or all of an animal’s offspring could go back with the animal. Such loans may have given rise to the current concept of interest.";
 
 export default function BookDetails() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const isLoggedIn = useAuth();
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);

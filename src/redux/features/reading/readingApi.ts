@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -28,11 +30,8 @@ export const readingApi = apiSlice.injectEndpoints({
       }),
       async onQueryStarted(arg, { dispatch, getState, queryFulfilled }) {
         const { user } = getState().auth;
-        console.log(arg.data.status);
-
         try {
           const result = await queryFulfilled;
-
           if (result?.data?.statusCode === 200) {
             dispatch(
               apiSlice.util.updateQueryData(

@@ -33,7 +33,6 @@ export default function BookCard({
 }: {
   book: IBookResponse;
 }) {
-  console.log(status, "prop status");
 
   const navigate = useNavigate();
   const location = useLocation();
